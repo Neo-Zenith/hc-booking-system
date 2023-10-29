@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useReducer, useMemo } from 'react';
 import Box from '@mui/material/Box';
-import { Table as DefaultTable } from '@mui/material';
+import { Table as DefaultTable, Typography } from '@mui/material';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
@@ -9,6 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TableHead from './TableHead';
 import TableToolbar from './TableToolbar';
+import { useTheme } from '@emotion/react';
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -50,6 +51,7 @@ export default function Table({
     defaultRowsPerPage,
     rows,
 }) {
+    const theme = useTheme();
     const [order, setOrder] = useState(defaultOrderStatus);
     const [orderBy, setOrderBy] = useState(defaultOrderBy);
     const [page, setPage] = useState(0);
@@ -109,6 +111,40 @@ export default function Table({
                                         sx={{ cursor: 'pointer' }}
                                     >
                                         {headCells.map((headCell, idx) => {
+                                            if (headCell.id === 'status') {
+                                                return (
+                                                    <TableCell key={idx} align="left">
+                                                        <Typography
+                                                            variant="body2"
+                                                            sx={{
+                                                                padding: '2% 5%',
+                                                                textAlign: 'center',
+                                                                color:
+                                                                    row[headCell.id] === 'Submitted'
+                                                                        ? theme.palette.warning.main
+                                                                        : row[headCell.id] ===
+                                                                          'Rejected'
+                                                                        ? theme.palette.error.main
+                                                                        : theme.palette.success
+                                                                              .main,
+                                                                borderRadius: '0.8rem',
+                                                                bgcolor:
+                                                                    row[headCell.id] === 'Submitted'
+                                                                        ? theme.palette.warning
+                                                                              .light
+                                                                        : row[headCell.id] ===
+                                                                          'Rejected'
+                                                                        ? theme.palette.error.light
+                                                                        : theme.palette.success
+                                                                              .light,
+                                                            }}
+                                                        >
+                                                            {row[headCell.id]}
+                                                        </Typography>
+                                                    </TableCell>
+                                                );
+                                            }
+
                                             return (
                                                 <TableCell
                                                     key={idx}

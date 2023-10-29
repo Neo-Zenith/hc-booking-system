@@ -133,7 +133,7 @@ export const WithBookingForm = ({ title, subtitle, fields, validator, submitRequ
                             value={inputable[field.id]}
                             onChange={(e) => {
                                 const updatedInputable = { ...inputable };
-                                updatedInputable[field.id] = `${e.$y}-${e.$m + 1}-${e.$d}`;
+                                updatedInputable[field.id] = e.$d;
                                 setInputable(updatedInputable);
                             }}
                         />
