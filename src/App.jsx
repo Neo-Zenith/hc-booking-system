@@ -4,16 +4,18 @@ import { ThemeProvider } from '@emotion/react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import VenueBookingPage from './pages/BookingPage/VenueBookingPage';
 import DenseAppBar from './components/AppBar/DenseAppBar';
+import ItemBookingPage from './pages/BookingPage/ItemBookingPage';
 
 function App() {
     const theme = createTheme();
     return (
         <>
             <ThemeProvider theme={theme}>
-                <DenseAppBar />
                 <Router>
+                    <DenseAppBar />
                     <Routes>
-                        <Route path="/venues" element={<VenueBookingPage />} />
+                        <Route path="/venues/book" element={<VenueBookingPage />} />
+                        <Route path="/items/book" element={<ItemBookingPage />} />
                     </Routes>
                 </Router>
             </ThemeProvider>
