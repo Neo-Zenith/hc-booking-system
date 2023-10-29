@@ -50,8 +50,10 @@ export default function Table({
     defaultOrderStatus,
     defaultRowsPerPage,
     rows,
+    filters,
 }) {
     const theme = useTheme();
+    const [filteredRows, setFilteredRows] = useState(rows);
     const [order, setOrder] = useState(defaultOrderStatus);
     const [orderBy, setOrderBy] = useState(defaultOrderBy);
     const [page, setPage] = useState(0);
@@ -78,22 +80,38 @@ export default function Table({
 
     const visibleRows = useMemo(
         () =>
-            stableSort(rows, getComparator(order, orderBy)).slice(
+            stableSort(filteredRows, getComparator(order, orderBy)).slice(
                 page * rowsPerPage,
                 page * rowsPerPage + rowsPerPage,
             ),
-        [rows, order, orderBy, page, rowsPerPage],
+        [filteredRows, order, orderBy, page, rowsPerPage],
     );
+
+    const handleFilter = (filtersInputable) => {
+        let updatedRows = rows;
+
+        for (const input of Object.keys(filtersInputable)) {
+            updatedRows = updatedRows.filter((row) => {
+                const filter = filters.find((filter) => filter.id === input);
+                return filter.filterBy(row, filtersInputable[input]);
+            });
+        }
+        setFilteredRows(updatedRows);
+    };
+
+    useEffect(() => {
+        setFilteredRows(rows);
+    }, [rows]);
 
     useEffect(() => {
         reloadTable();
-    }, [rows]);
+    }, [filteredRows]);
 
     return (
         <Box sx={{ width: '100%' }}>
-            <Paper sx={{ width: '100%', mb: 2, padding: '1rem' }}>
-                <TableToolbar title={title} />
-                <TableContainer>
+            <Paper sx={{ width: '100%', mb: 2, padding: '1rem', boxSizing: 'border-box' }}>
+                <TableToolbar title={title} filters={filters} onFilter={handleFilter} />
+                <TableContainer sx={{ mt: 2 }}>
                     <DefaultTable sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size="medium">
                         <TableHead
                             order={order}

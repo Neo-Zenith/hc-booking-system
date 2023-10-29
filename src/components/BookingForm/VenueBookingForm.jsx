@@ -25,14 +25,14 @@ export default function VenueBookingForm() {
         {
             id: 'venue',
             name: 'Venue Name',
-            accept: 'multi-input-selection',
+            accept: 'input-selection',
             options: venues,
         },
         { id: 'event', name: 'Event Name', accept: 'string' },
         {
             id: 'division',
             name: 'Division',
-            accept: 'multi-selection',
+            accept: 'selection',
             options: [
                 { name: 'EXCO', value: 'EXCO' },
                 { name: 'HCI', value: 'HCI' },

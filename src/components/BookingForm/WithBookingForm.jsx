@@ -66,7 +66,7 @@ export const WithBookingForm = ({ title, subtitle, fields, validator, submitRequ
                         helperText={errors[field.id]}
                     />
                 );
-            case 'multi-input-selection':
+            case 'input-selection':
                 return (
                     <Autocomplete
                         key={index}
@@ -89,7 +89,7 @@ export const WithBookingForm = ({ title, subtitle, fields, validator, submitRequ
                         )}
                     />
                 );
-            case 'multi-selection':
+            case 'selection':
                 return (
                     <FormControl fullWidth key={index}>
                         <InputLabel>{field.name}</InputLabel>

@@ -33,6 +33,52 @@ export default function VenuesTable() {
         },
     ];
 
+    const filters = [
+        {
+            id: 'name',
+            label: 'Venue Name',
+            accept: 'string',
+            filterBy: (row, value) => {
+                if (value === '') {
+                    return row;
+                }
+                if (row.name.toLowerCase().includes(value.toLowerCase())) {
+                    return row;
+                }
+            },
+        },
+        {
+            id: 'capacity',
+            label: 'Capacity',
+            accept: 'integer',
+            filterBy: (row, value) => {
+                if (value === '') {
+                    return row;
+                }
+                if (value >= row.capacity) {
+                    return row;
+                }
+            },
+        },
+        {
+            id: 'location',
+            label: 'Location',
+            accept: 'multi-selection',
+            options: [
+                { name: 'North Spine', value: 'NS' },
+                { name: 'South Spine', value: 'SS' },
+            ],
+            filterBy: (row, value) => {
+                if (value.length === 0) {
+                    return row;
+                }
+                if (value.some((v) => row.location.startsWith(v))) {
+                    return row;
+                }
+            },
+        },
+    ];
+
     const fetchVenues = async () => {
         const response = await supabase.from('venues').select();
         const { data } = response;
@@ -53,10 +99,6 @@ export default function VenuesTable() {
         fetchVenues();
     }, []);
 
-    useEffect(() => {
-        console.log(venues);
-    }, [venues]);
-
     return (
         <Table
             title={'Venues'}
@@ -65,6 +107,7 @@ export default function VenuesTable() {
             defaultOrderBy={'name'}
             defaultOrderStatus={'asc'}
             rows={venues}
+            filters={filters}
         />
     );
 }

@@ -6,7 +6,7 @@ export default function ItemBookingForm() {
         {
             id: 'division',
             name: 'Division',
-            accept: 'multi-selection',
+            accept: 'selection',
             options: [
                 { name: 'EXCO', value: 'EXCO' },
                 { name: 'HCI', value: 'HCI' },
@@ -21,7 +21,7 @@ export default function ItemBookingForm() {
         {
             id: 'item',
             name: 'Item Name',
-            accept: 'multi-input-selection',
+            accept: 'input-selection',
             options: ['Scissors', 'Glue'],
         },
         {
