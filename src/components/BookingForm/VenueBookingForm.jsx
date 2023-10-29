@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
-import { supabase } from '../../App';
+import { manifestAlert, supabase } from '../../App';
 import { WithBookingForm } from './withBookingForm';
+import { useNavigate } from 'react-router-dom';
 
 export default function VenueBookingForm() {
+    const [alertPayload, setAlertPayload] = useState({});
+    const [alertActive, setAlertActive] = useState(false);
     const [venuesObj, setVenuesObj] = useState([]);
     const [venues, setVenues] = useState([]);
 
@@ -20,6 +23,18 @@ export default function VenueBookingForm() {
     useEffect(() => {
         getVenues();
     }, []);
+
+    useEffect(() => {
+        if (alertActive) {
+            const timeout = setTimeout(() => {
+                setAlertActive(false);
+            }, 1500);
+
+            return () => {
+                clearTimeout(timeout);
+            };
+        }
+    }, [alertActive]);
 
     const fields = [
         {
@@ -44,6 +59,8 @@ export default function VenueBookingForm() {
             ],
         },
         { id: 'eventDate', name: 'Event Date', accept: 'date' },
+        { id: 'eventStartTime', name: 'Event Start Time', accept: 'time' },
+        { id: 'eventEndTime', name: 'Event End Time', accept: 'time' },
     ];
 
     const validateFields = (inputable) => {
@@ -60,15 +77,48 @@ export default function VenueBookingForm() {
         if (!inputable.eventDate || isNaN(new Date(inputable.eventDate).getTime())) {
             updatedErrors.eventDate = 'Event date is required.';
         }
+
+        if (!inputable.eventStartTime || isNaN(new Date(inputable.eventStartTime).getTime())) {
+            updatedErrors.eventStartTime = 'Event start time is required.';
+        }
+
+        if (!inputable.eventEndTime || isNaN(new Date(inputable.eventEndTime).getTime())) {
+            updatedErrors.eventEndTime = 'Event end time is required.';
+        }
+
+        if (
+            inputable.eventStartTime &&
+            new Date(inputable.eventEndTime).getTime() -
+                new Date(inputable.eventStartTime).getTime() <
+                60 * 60 * 1000
+        ) {
+            updatedErrors.eventStartTime = 'Event duration must be at least 1 hour.';
+            updatedErrors.eventEndTime = 'Event duration must be at least 1 hour.';
+        }
         return updatedErrors;
     };
 
     const submitRequest = async (payload) => {
         const selectedVenueIdx = venues.indexOf(payload.venue);
         const venueUUID = venuesObj[selectedVenueIdx].uuid;
+        const eventStartTime = payload.eventStartTime.toISOString().split('T')[1].slice(0, 5);
+        const eventEndTime = payload.eventEndTime.toISOString().split('T')[1].slice(0, 5);
         const response = await supabase
             .from('venuesBooking')
-            .insert({ ...payload, venue: venueUUID });
+            .insert({ ...payload, venue: venueUUID, eventStartTime, eventEndTime });
+        if (response.status === 201) {
+            setAlertActive(true);
+            setAlertPayload({
+                type: 'success',
+                message: 'Venue booking request has been submitted.',
+            });
+        } else {
+            setAlertActive(true);
+            setAlertPayload({
+                type: 'error',
+                message: response.message,
+            });
+        }
     };
 
     return (
@@ -80,6 +130,7 @@ export default function VenueBookingForm() {
                 validator={validateFields}
                 submitRequest={submitRequest}
             />
+            {alertActive && manifestAlert(alertPayload.type, alertPayload.message)}
         </>
     );
 }

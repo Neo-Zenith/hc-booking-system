@@ -15,13 +15,14 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useTheme } from '@emotion/react';
 import { useState } from 'react';
+import { TimePicker } from '@mui/x-date-pickers';
 
 export const WithBookingForm = ({ title, subtitle, fields, validator, submitRequest }) => {
     const theme = useTheme();
     const [inputable, setInputable] = useState(() => {
         const initialInputable = {};
         for (const key of fields) {
-            if (key.accept === 'date') {
+            if (key.accept === 'date' || key.accept === 'time') {
                 initialInputable[key.id] = dayjs(new Date());
             } else {
                 initialInputable[key.id] = '';
@@ -150,13 +151,38 @@ export const WithBookingForm = ({ title, subtitle, fields, validator, submitRequ
                         )}
                     </LocalizationProvider>
                 );
+            case 'time':
+                return (
+                    <LocalizationProvider dateAdapter={AdapterDayjs} key={index}>
+                        <TimePicker
+                            label={field.name}
+                            value={inputable[field.id]}
+                            onChange={(e) => {
+                                const updatedInputable = { ...inputable };
+                                updatedInputable[field.id] = e.$d;
+                                setInputable(updatedInputable);
+                            }}
+                        />
+                        {errors[field.id] && (
+                            <Typography
+                                variant="subtitle1"
+                                sx={{
+                                    color: theme.palette.error.main,
+                                    margin: '-1rem 1.4rem 0rem 1.2rem',
+                                }}
+                            >
+                                {errors[field.id]}
+                            </Typography>
+                        )}
+                    </LocalizationProvider>
+                );
         }
     };
 
     const onReset = () => {
         const resettedInputable = {};
         for (const key of fields) {
-            if (key.accept === 'date') {
+            if (key.accept === 'date' || key.accept === 'time') {
                 resettedInputable[key.id] = dayjs(new Date());
             } else {
                 resettedInputable[key.id] = '';

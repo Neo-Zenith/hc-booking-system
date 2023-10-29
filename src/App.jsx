@@ -8,11 +8,16 @@ import ItemBookingPage from './pages/BookingPage/ItemBookingPage';
 import { createClient } from '@supabase/supabase-js';
 import VenuesListingPage from './pages/ListingPage/VenuesListingPage';
 import VenuesBookingListingPage from './pages/ListingPage/VenuesBookingListingPage';
+import Alerts from './components/Alerts/Alerts';
 
 export const supabase = createClient(
     'https://aivkivxyepaocejantjk.supabase.co',
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFpdmtpdnh5ZXBhb2NlamFudGprIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTQ2MjE5OTQsImV4cCI6MjAxMDE5Nzk5NH0._0WHbom46xbwEu6k7FlHxBJY5z1pCK4UmbDUtizsDRk',
 );
+
+export const manifestAlert = (type, message) => {
+    return <Alerts message={message} type={type} open={true} />;
+};
 
 function App() {
     const theme = createTheme();
