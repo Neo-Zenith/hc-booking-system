@@ -28,6 +28,16 @@ export default function VenuesBookingTable() {
             label: 'Event Date',
         },
         {
+            id: 'eventStartTime',
+            numeric: false,
+            label: 'From',
+        },
+        {
+            id: 'eventEndTime',
+            numeric: false,
+            label: 'To',
+        },
+        {
             id: 'createdAt',
             numeric: false,
             label: 'Created at',
@@ -98,7 +108,9 @@ export default function VenuesBookingTable() {
     const fetchVenuesBooking = async () => {
         const response = await supabase
             .from('venuesBooking')
-            .select(`uuid, event, division, eventDate, createdAt, status, venues(name)`);
+            .select(
+                `uuid, event, division, eventDate, createdAt, eventStartTime, eventEndTime, status, venues(name)`,
+            );
         const { data } = response;
         setBookings(() => {
             return data.map((d) => {
@@ -107,6 +119,8 @@ export default function VenuesBookingTable() {
                     event: d.event,
                     division: d.division,
                     eventDate: d.eventDate,
+                    eventStartTime: d.eventStartTime,
+                    eventEndTime: d.eventEndTime,
                     createdAt: new Date(d.createdAt).toLocaleString(),
                     venue: d.venues.name,
                     status: d.status.slice(0, 1).toUpperCase() + d.status.slice(1),

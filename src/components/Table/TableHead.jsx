@@ -1,4 +1,3 @@
-import { useTheme } from '@emotion/react';
 import {
     Box,
     TableHead as DefaultTableHead,
@@ -9,14 +8,13 @@ import {
 import { visuallyHidden } from '@mui/utils';
 
 export default function TableHead({ order, orderBy, onRequestSort, headCells }) {
-    const theme = useTheme();
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
     };
 
     return (
         <DefaultTableHead>
-            <TableRow sx={{ bgcolor: theme.palette.neutral[100] }}>
+            <TableRow>
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}

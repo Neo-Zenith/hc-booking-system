@@ -1,4 +1,4 @@
-import { filledInputClasses, outlinedInputClasses } from '@mui/material';
+import { filledInputClasses, outlinedInputClasses, tableCellClasses } from '@mui/material';
 
 export default function createComponents({ palette }) {
     return {
@@ -81,6 +81,23 @@ export default function createComponents({ palette }) {
                     fontSize: 14,
                     fontWeight: 500,
                     lineHeight: '24px',
+                },
+            },
+        },
+        MuiTableHead: {
+            styleOverrides: {
+                root: {
+                    borderBottom: 'none',
+                    [`& .${tableCellClasses.root}`]: {
+                        borderBottom: 'none',
+                        backgroundColor: palette.neutral[100],
+                        color: palette.neutral[700],
+                        fontSize: 12,
+                        fontWeight: 600,
+                        lineHeight: 1,
+                        letterSpacing: 0.5,
+                        textTransform: 'uppercase',
+                    },
                 },
             },
         },

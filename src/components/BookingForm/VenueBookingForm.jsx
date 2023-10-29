@@ -101,11 +101,33 @@ export default function VenueBookingForm() {
     const submitRequest = async (payload) => {
         const selectedVenueIdx = venues.indexOf(payload.venue);
         const venueUUID = venuesObj[selectedVenueIdx].uuid;
-        const eventStartTime = payload.eventStartTime.toISOString().split('T')[1].slice(0, 5);
-        const eventEndTime = payload.eventEndTime.toISOString().split('T')[1].slice(0, 5);
-        const response = await supabase
-            .from('venuesBooking')
-            .insert({ ...payload, venue: venueUUID, eventStartTime, eventEndTime });
+        let paddedStartTime = new Date(payload.eventStartTime)
+            .toLocaleTimeString('en-US')
+            .split(':');
+        const startTimeOffset = paddedStartTime[2].includes('PM') ? 12 : 0;
+        paddedStartTime = paddedStartTime.map((element, index) => {
+            if (index === 0)
+                return (parseInt(element) + startTimeOffset).toString().padStart(2, '0');
+            return element.padStart(2, '0');
+        });
+        paddedStartTime = paddedStartTime.join(':');
+        paddedStartTime = paddedStartTime.slice(0, 5);
+
+        let paddedEndTime = new Date(payload.eventEndTime).toLocaleTimeString('en-US').split(':');
+        const endTimeOffset = paddedEndTime[2].includes('PM') ? 12 : 0;
+        paddedEndTime = paddedEndTime.map((element, index) => {
+            if (index === 0) return (parseInt(element) + endTimeOffset).toString().padStart(2, '0');
+            return element.padStart(2, '0');
+        });
+        paddedEndTime = paddedEndTime.join(':');
+        paddedEndTime = paddedEndTime.slice(0, 5);
+
+        const response = await supabase.from('venuesBooking').insert({
+            ...payload,
+            venue: venueUUID,
+            eventStartTime: paddedStartTime,
+            eventEndTime: paddedEndTime,
+        });
         if (response.status === 201) {
             setAlertActive(true);
             setAlertPayload({

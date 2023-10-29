@@ -9,7 +9,7 @@ export default function WithListingPage({ table }) {
                 style={{
                     display: 'flex',
                     width: '100%',
-                    height: '100vh',
+                    minHeight: '100vh',
                     justifyContent: 'center',
                     padding: '2% 5%',
                     paddingTop: '15rem',

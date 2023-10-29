@@ -10,26 +10,31 @@ export default function VenuesTable() {
             id: 'uuid',
             numeric: false,
             label: 'UUID',
+            width: '25%',
         },
         {
             id: 'name',
             numeric: false,
             label: 'Name',
+            width: '25%',
         },
         {
             id: 'capacity',
             numeric: true,
             label: 'Capacity',
+            width: '15%',
         },
         {
             id: 'description',
             numeric: false,
             label: 'Description',
+            width: '15%',
         },
         {
             id: 'location',
             numeric: false,
             label: 'Location',
+            width: '20%',
         },
     ];
 
@@ -67,6 +72,8 @@ export default function VenuesTable() {
             options: [
                 { name: 'North Spine', value: 'NS' },
                 { name: 'South Spine', value: 'SS' },
+                { name: 'The Arc', value: 'LHN' },
+                { name: 'The Hive', value: 'LHS' },
             ],
             filterBy: (row, value) => {
                 if (value.length === 0) {

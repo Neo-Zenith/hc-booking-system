@@ -104,6 +104,7 @@ export default function Table({
     }, [rows]);
 
     useEffect(() => {
+        setPage(0);
         reloadTable();
     }, [filteredRows]);
 
@@ -111,8 +112,13 @@ export default function Table({
         <Box sx={{ width: '100%' }}>
             <Paper sx={{ width: '100%', mb: 2, padding: '1rem', boxSizing: 'border-box' }}>
                 <TableToolbar title={title} filters={filters} onFilter={handleFilter} />
-                <TableContainer sx={{ mt: 2 }}>
-                    <DefaultTable sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size="medium">
+                <TableContainer sx={{ mt: 2, maxHeight: 500 }}>
+                    <DefaultTable
+                        stickyHeader
+                        sx={{ minWidth: 750 }}
+                        aria-labelledby="tableTitle"
+                        size="medium"
+                    >
                         <TableHead
                             order={order}
                             orderBy={orderBy}
@@ -131,7 +137,11 @@ export default function Table({
                                         {headCells.map((headCell, idx) => {
                                             if (headCell.id === 'status') {
                                                 return (
-                                                    <TableCell key={idx} align="left">
+                                                    <TableCell
+                                                        key={idx}
+                                                        align="left"
+                                                        width={headCell.width}
+                                                    >
                                                         <Typography
                                                             variant="body2"
                                                             sx={{
@@ -166,6 +176,7 @@ export default function Table({
                                             return (
                                                 <TableCell
                                                     key={idx}
+                                                    width={headCell.width}
                                                     align={headCell.numeric ? 'right' : 'left'}
                                                 >
                                                     {row[headCell.id]}
@@ -190,7 +201,7 @@ export default function Table({
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={rows.length}
+                    count={filteredRows.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
