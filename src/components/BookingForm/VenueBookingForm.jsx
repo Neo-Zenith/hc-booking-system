@@ -1,12 +1,32 @@
+import { useEffect, useState } from 'react';
+import { supabase } from '../../App';
 import { WithBookingForm } from './withBookingForm';
 
 export default function VenueBookingForm() {
+    const [venuesObj, setVenuesObj] = useState([]);
+    const [venues, setVenues] = useState([]);
+
+    async function getVenues() {
+        const response = await supabase.from('venues').select();
+        const { data } = response;
+        setVenuesObj(data);
+        const initialVenues = [];
+        for (const venue of data) {
+            initialVenues.push(venue.name);
+        }
+        setVenues(initialVenues);
+    }
+
+    useEffect(() => {
+        getVenues();
+    }, []);
+
     const fields = [
         {
-            id: 'name',
+            id: 'venue',
             name: 'Venue Name',
             accept: 'multi-input-selection',
-            options: ['TR-27', 'TR-28'],
+            options: venues,
         },
         { id: 'event', name: 'Event Name', accept: 'string' },
         {
@@ -28,8 +48,8 @@ export default function VenueBookingForm() {
 
     const validateFields = (inputable) => {
         const updatedErrors = {};
-        if (!inputable.name) {
-            updatedErrors.name = 'Venue name is required.';
+        if (!inputable.venue) {
+            updatedErrors.venue = 'Venue name is required.';
         }
         if (!inputable.event) {
             updatedErrors.event = 'Event name is required.';
@@ -43,6 +63,14 @@ export default function VenueBookingForm() {
         return updatedErrors;
     };
 
+    const submitRequest = async (payload) => {
+        const selectedVenueIdx = venues.indexOf(payload.venue);
+        const venueUUID = venuesObj[selectedVenueIdx].uuid;
+        const response = await supabase
+            .from('venuesBooking')
+            .insert({ ...payload, venue: venueUUID });
+    };
+
     return (
         <>
             <WithBookingForm
@@ -50,6 +78,7 @@ export default function VenueBookingForm() {
                 subtitle={'Please fill up this form to facilitate your booking request.'}
                 fields={fields}
                 validator={validateFields}
+                submitRequest={submitRequest}
             />
         </>
     );

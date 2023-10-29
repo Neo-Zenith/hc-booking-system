@@ -14,9 +14,9 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useTheme } from '@emotion/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-export const WithBookingForm = ({ title, subtitle, fields, validator }) => {
+export const WithBookingForm = ({ title, subtitle, fields, validator, submitRequest }) => {
     const theme = useTheme();
     const [inputable, setInputable] = useState(() => {
         const initialInputable = {};
@@ -168,16 +168,14 @@ export const WithBookingForm = ({ title, subtitle, fields, validator }) => {
 
     const onSubmit = () => {
         const validatorErrors = validator(inputable);
-        if (validatorErrors) {
+        if (Object.keys(validatorErrors).length !== 0) {
             setErrors(validatorErrors);
             return false;
         }
+        submitRequest(inputable);
         setErrors({});
     };
 
-    useEffect(() => {
-        console.log(inputable);
-    }, [inputable]);
     return (
         <>
             <Box
