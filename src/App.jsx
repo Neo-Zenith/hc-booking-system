@@ -9,6 +9,8 @@ import { createClient } from '@supabase/supabase-js';
 import VenuesListingPage from './pages/ListingPage/VenuesListingPage';
 import VenuesBookingListingPage from './pages/ListingPage/VenuesBookingListingPage';
 import Alerts from './components/Alerts/Alerts';
+import MaintenancePage from './pages/MaintenancePage/MaintenancePage';
+import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 
 export const supabase = createClient(
     'https://aivkivxyepaocejantjk.supabase.co',
@@ -28,9 +30,12 @@ function App() {
                     <DenseAppBar />
                     <Routes>
                         <Route path="/venues/book" element={<VenueBookingPage />} />
-                        <Route path="/items/book" element={<ItemBookingPage />} />
                         <Route path="/venues" element={<VenuesListingPage />} />
                         <Route path="/venues/history" element={<VenuesBookingListingPage />} />
+                        <Route path="/items/book" element={<MaintenancePage />} />
+                        <Route path="/items" element={<MaintenancePage />} />
+                        <Route path="/items/history" element={<MaintenancePage />} />
+                        <Route path="*" element={<NotFoundPage />} />
                     </Routes>
                 </Router>
             </ThemeProvider>
