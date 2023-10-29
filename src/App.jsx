@@ -5,7 +5,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import VenueBookingPage from './pages/BookingPage/VenueBookingPage';
 import DenseAppBar from './components/AppBar/DenseAppBar';
 import ItemBookingPage from './pages/BookingPage/ItemBookingPage';
-import { createClient } from "@supabase/supabase-js";
+import { createClient } from '@supabase/supabase-js';
+import VenueListingPage from './pages/ListingPage/VenueListingPage';
 
 export const supabase = createClient(
     'https://aivkivxyepaocejantjk.supabase.co',
@@ -22,6 +23,7 @@ function App() {
                     <Routes>
                         <Route path="/venues/book" element={<VenueBookingPage />} />
                         <Route path="/items/book" element={<ItemBookingPage />} />
+                        <Route path="/venues" element={<VenueListingPage />} />
                     </Routes>
                 </Router>
             </ThemeProvider>
