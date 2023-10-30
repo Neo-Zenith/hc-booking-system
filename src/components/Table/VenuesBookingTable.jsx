@@ -107,7 +107,7 @@ export default function VenuesBookingTable() {
 
     const fetchVenuesBooking = async () => {
         const response = await supabase
-            .from('venuesBooking')
+            .from('bookings_venue')
             .select(
                 `uuid, event, division, eventDate, createdAt, eventStartTime, eventEndTime, status, venues(name)`,
             );

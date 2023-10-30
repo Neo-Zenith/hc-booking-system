@@ -122,25 +122,35 @@ export default function VenueBookingForm() {
         paddedEndTime = paddedEndTime.join(':');
         paddedEndTime = paddedEndTime.slice(0, 5);
 
-        const response = await supabase.from('venuesBooking').insert({
+        const parsedPayload = {
             ...payload,
             venue: venueUUID,
             eventStartTime: paddedStartTime,
             eventEndTime: paddedEndTime,
-        });
+        };
+
+        const response = await supabase.from('bookings_venue').insert(parsedPayload);
         if (response.status === 201) {
             setAlertActive(true);
             setAlertPayload({
                 type: 'success',
                 message: 'Venue booking request has been submitted.',
             });
+            executeMailer({ ...parsedPayload, venue: payload.venue });
         } else {
             setAlertActive(true);
             setAlertPayload({
                 type: 'error',
-                message: response.message,
+                message: response.error.message,
             });
         }
+    };
+
+    const executeMailer = async (payload) => {
+        const { data, error } = await supabase.functions.invoke('mailer', {
+            body: JSON.stringify(payload),
+        });
+        return;
     };
 
     return (
