@@ -5,7 +5,7 @@ This web app serves as a platform to streamline the inventory item and venue boo
 
 ## How to Use
 ### For end-user
-Simply head over to ![this website](https://hc-logistic.vercel.app/venues).
+Simply head over to ![this website](https://hc-logistic.vercel.app).
 
 ### For developer
 1. Perform a pull request <br/>
