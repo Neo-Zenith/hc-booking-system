@@ -8,7 +8,7 @@ export default function MaintenancePage() {
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
-                height: '100vh',
+                height: '95vh',
                 backgroundColor: '#f5f5f5',
             }}
         >

@@ -1,8 +1,10 @@
 import { useTheme } from '@emotion/react';
 import { Box, Button, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 export default function NotFoundPage() {
     const theme = useTheme();
+    const navigate = useNavigate();
 
     return (
         <Box
@@ -11,7 +13,7 @@ export default function NotFoundPage() {
                 flexDirection: 'row',
                 justifyContent: 'center',
                 alignItems: 'center',
-                height: '100vh',
+                height: '95vh',
                 backgroundColor: '#f5f5f5',
                 columnGap: '10%',
             }}
@@ -34,11 +36,7 @@ export default function NotFoundPage() {
                 >
                     I didn't eat it. I swear!!
                 </Typography>
-                <Button
-                    variant="contained"
-                    sx={{ margin: 'auto' }}
-                    onClick={() => (window.location.href = '/venues')}
-                >
+                <Button variant="contained" sx={{ margin: 'auto' }} onClick={() => navigate('/')}>
                     <Typography>Back to Home</Typography>
                 </Button>
             </div>

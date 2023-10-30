@@ -1,4 +1,4 @@
-import { WithBookingForm } from './withBookingForm';
+import { WithBookingForm } from './WithBookingForm';
 
 export default function ItemBookingForm() {
     const fields = [

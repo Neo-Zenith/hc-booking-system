@@ -11,6 +11,8 @@ import VenuesBookingListingPage from './pages/ListingPage/VenuesBookingListingPa
 import Alerts from './components/Alerts/Alerts';
 import MaintenancePage from './pages/MaintenancePage/MaintenancePage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
+import HomePage from './pages/HomePage/HomePage';
+import Footer from './components/Footer/Footer';
 
 export const supabase = createClient(
     'https://aivkivxyepaocejantjk.supabase.co',
@@ -29,6 +31,7 @@ function App() {
                 <Router>
                     <DenseAppBar />
                     <Routes>
+                        <Route path="/" element={<HomePage />} />
                         <Route path="/venues/book" element={<VenueBookingPage />} />
                         <Route path="/venues" element={<VenuesListingPage />} />
                         <Route path="/venues/history" element={<VenuesBookingListingPage />} />
@@ -38,6 +41,15 @@ function App() {
                         <Route path="*" element={<NotFoundPage />} />
                     </Routes>
                 </Router>
+                <div
+                    style={{
+                        flex: 1,
+                        display: 'flex',
+                        justifyContent: 'center',
+                    }}
+                >
+                    <Footer />
+                </div>
             </ThemeProvider>
         </>
     );

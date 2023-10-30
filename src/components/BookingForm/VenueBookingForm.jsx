@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { manifestAlert, supabase } from '../../App';
-import { WithBookingForm } from './withBookingForm';
-import { useNavigate } from 'react-router-dom';
+import { WithBookingForm } from './WithBookingForm';
 
 export default function VenueBookingForm() {
     const [alertPayload, setAlertPayload] = useState({});

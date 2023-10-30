@@ -9,7 +9,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { Typography } from '@mui/material';
 import { useTheme } from '@emotion/react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Drawer({ isOpen, anchor, onClose, sections }) {
     const theme = useTheme();
@@ -99,7 +99,14 @@ export default function Drawer({ isOpen, anchor, onClose, sections }) {
                             rowGap: '5rem',
                         }}
                     >
-                        <Typography variant="h4" sx={{ padding: '2% 5%', textAlign: 'center' }}>
+                        <Typography
+                            variant="h4"
+                            sx={{ padding: '2% 5%', textAlign: 'center', cursor: 'pointer' }}
+                            onClick={() => {
+                                onClose();
+                                navigate('/');
+                            }}
+                        >
                             NTU Heritage Club Booking System
                         </Typography>
                         {list(anchor)}
