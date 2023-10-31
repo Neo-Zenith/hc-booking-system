@@ -32,7 +32,7 @@ export default function TableToolbar({ title, filters, onFilter }) {
             case 'string':
                 return (
                     <TextField
-                        fullWidth
+                        sx={{ minWidth: '20rem', flex: 1 }}
                         key={idx}
                         label={filter.label}
                         value={filtersInputable[filter.id]}
@@ -46,7 +46,7 @@ export default function TableToolbar({ title, filters, onFilter }) {
             case 'integer':
                 return (
                     <TextField
-                        fullWidth
+                        sx={{ minWidth: '20rem', flex: 1 }}
                         key={idx}
                         type="number"
                         label={filter.label}
@@ -60,7 +60,7 @@ export default function TableToolbar({ title, filters, onFilter }) {
                 );
             case 'multi-selection':
                 return (
-                    <FormControl fullWidth key={idx}>
+                    <FormControl key={idx} sx={{ minWidth: '20rem', flex: 1 }}>
                         <InputLabel>{filter.label}</InputLabel>
                         <Select
                             label={filter.label}
@@ -147,10 +147,12 @@ export default function TableToolbar({ title, filters, onFilter }) {
                     <Box
                         sx={{
                             mt: 1,
-                            pl: { sm: 2 },
-                            pr: { xs: 1, sm: 1 },
+                            pl: 1,
+                            pr: 1,
                             display: 'flex',
+                            rowGap: '1rem',
                             columnGap: '1rem',
+                            flexWrap: 'wrap',
                         }}
                     >
                         {filters.map((filter, idx) => {
@@ -158,7 +160,7 @@ export default function TableToolbar({ title, filters, onFilter }) {
                         })}
                     </Box>
                     <Box style={{ display: 'flex' }}>
-                        <Button variant="outlined" sx={{ mr: 'auto', ml: 2 }} onClick={resetFilter}>
+                        <Button variant="outlined" sx={{ mr: 'auto', ml: 1 }} onClick={resetFilter}>
                             <Typography>Reset Filters</Typography>
                         </Button>
                         <Button

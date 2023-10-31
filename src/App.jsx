@@ -12,7 +12,6 @@ import Alerts from './components/Alerts/Alerts';
 import MaintenancePage from './pages/MaintenancePage/MaintenancePage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import HomePage from './pages/HomePage/HomePage';
-import Footer from './components/Footer/Footer';
 
 export const supabase = createClient(
     'https://aivkivxyepaocejantjk.supabase.co',
@@ -41,15 +40,6 @@ function App() {
                         <Route path="*" element={<NotFoundPage />} />
                     </Routes>
                 </Router>
-                <div
-                    style={{
-                        flex: 1,
-                        display: 'flex',
-                        justifyContent: 'center',
-                    }}
-                >
-                    <Footer />
-                </div>
             </ThemeProvider>
         </>
     );

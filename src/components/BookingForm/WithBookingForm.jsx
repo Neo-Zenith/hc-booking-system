@@ -211,6 +211,7 @@ export const WithBookingForm = ({ title, subtitle, fields, validator, submitRequ
                     flexDirection: 'column',
                     padding: 'max(2%, 1.5rem)',
                     width: '100%',
+                    height: 'fit-content',
                     bgcolor: theme.palette.neutral[50],
                 }}
             >

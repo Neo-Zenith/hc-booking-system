@@ -1,4 +1,5 @@
 import { Box, Typography, CircularProgress } from '@mui/material';
+import Footer from '../../components/Footer/Footer';
 
 export default function MaintenancePage() {
     return (
@@ -6,14 +7,15 @@ export default function MaintenancePage() {
             sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'center',
                 alignItems: 'center',
-                height: '95vh',
+                minHeight: '100vh',
                 backgroundColor: '#f5f5f5',
+                gap: '3rem',
             }}
         >
             <Box
                 sx={{
+                    marginTop: 'max(25vh, 10rem)',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
@@ -37,6 +39,16 @@ export default function MaintenancePage() {
                 </Typography>
                 <CircularProgress color="primary" />
             </Box>
+            <div
+                style={{
+                    marginTop: 'auto',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'flex-end',
+                }}
+            >
+                <Footer />
+            </div>
         </Box>
     );
 }

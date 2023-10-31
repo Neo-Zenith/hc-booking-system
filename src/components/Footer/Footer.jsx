@@ -7,12 +7,10 @@ export default function Footer() {
     return (
         <div
             style={{
-                marginBottom: '0.4rem',
                 display: 'flex',
                 justifyContent: 'center',
                 width: '100%',
-                height: '4.6vh',
-                alignItems: 'flex-end',
+                height: 'fit-content',
                 backgroundColor: theme.palette.neutral[100],
             }}
         >

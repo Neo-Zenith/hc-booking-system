@@ -164,7 +164,7 @@ export default function Table({
                                                                           'Rejected'
                                                                         ? theme.palette.error.light
                                                                         : theme.palette.success
-                                                                              .light,
+                                                                              .lightest,
                                                             }}
                                                         >
                                                             {row[headCell.id]}
