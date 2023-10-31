@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Table from './Table';
 import { supabase } from '../../App';
+import { Link } from 'react-router-dom';
 
 export default function VenuesBookingTable() {
     const [bookings, setBookings] = useState([]);
@@ -46,6 +47,11 @@ export default function VenuesBookingTable() {
             id: 'status',
             numeric: false,
             label: 'Status',
+        },
+        {
+            id: 'mediaUrl',
+            numeric: false,
+            label: 'Attachment',
         },
     ];
 
@@ -114,6 +120,9 @@ export default function VenuesBookingTable() {
         const { data } = response;
         setBookings(() => {
             return data.map((d) => {
+                const mediaUrl = supabase.storage
+                    .from('booking_confirmation')
+                    .getPublicUrl(d.uuid + '.pdf').data.publicUrl;
                 return {
                     uuid: d.uuid,
                     event: d.event,
@@ -124,6 +133,13 @@ export default function VenuesBookingTable() {
                     createdAt: new Date(d.createdAt).toLocaleString(),
                     venue: d.venues.name,
                     status: d.status.slice(0, 1).toUpperCase() + d.status.slice(1),
+                    mediaUrl: mediaUrl ? (
+                        <Link target="__blank" to={mediaUrl}>
+                            Link
+                        </Link>
+                    ) : (
+                        'N/A'
+                    ),
                 };
             });
         });

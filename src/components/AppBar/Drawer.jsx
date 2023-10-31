@@ -38,8 +38,8 @@ export default function Drawer({ isOpen, anchor, onClose, sections }) {
             sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 300,
                 rowGap: '2rem',
+                padding: '5%',
             }}
             role="presentation"
             onClick={toggleDrawer(anchor, false)}
@@ -97,6 +97,7 @@ export default function Drawer({ isOpen, anchor, onClose, sections }) {
                             flexDirection: 'column',
                             alignItems: 'center',
                             rowGap: '5rem',
+                            width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 300,
                         }}
                     >
                         <Typography
